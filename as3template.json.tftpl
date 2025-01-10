@@ -1,0 +1,99 @@
+{
+    "class": "ADC",
+    "schemaVersion": "3.37.0",
+    "label": "MinIO virtual server",
+    "remark": "Demo declaration - review before use in production environments",
+    "${tenant_name}": {
+        "class": "Tenant",
+        "${application_name}_console": {
+            "class": "Application",
+            "template": "http",
+            "serviceMain": {
+                "layer4": "tcp",
+                "persistenceMethods": [
+                    "cookie"
+                ],
+                "pool": "${application_name}_pool",
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "class": "Service_HTTP",
+                "profileHTTP": {
+                    "bigip": "/Common/http"
+                },
+                "profileTCP": {
+                    "bigip": "/Common/tcp"
+                },
+                "virtualAddresses": [
+                    "${console_destination_address}"
+                ],
+                "virtualPort": ${console_destination_port},
+                "snat": "auto"
+            },
+            "${application_name}_pool": {
+                "members": ${jsonencode([ for addr in addresses : 
+                    {   addressDiscovery = "fqdn", 
+                        servicePort = 9001, 
+                        hostname = addr, 
+                        autoPopulate = true, 
+                        shareNodes = true 
+                    } 
+                ])},
+                "monitors": [
+                    {
+                        "bigip": "/Common/http"
+                    }
+                ],
+                "class": "Pool"
+            }         
+        },
+        "${application_name}_api": {
+            "class": "Application",
+            "template": "http",
+            "serviceMain": {
+                "layer4": "tcp",
+                "persistenceMethods": [
+                    "cookie"
+                ],
+                "pool": "${application_name}_pool",
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "class": "Service_HTTP",
+                "profileHTTP": {
+                    "bigip": "/Common/http"
+                },
+                "profileTCP": {
+                    "bigip": "/Common/tcp"
+                },
+                "virtualAddresses": [
+                    "${api_destination_address}"
+                ],
+                "virtualPort": ${api_destination_port},
+                "snat": "auto",
+                "policyWAF": {
+                    "use": "ASM_Policy"
+                }
+            },
+            "${application_name}_pool": {
+                "members": ${jsonencode([ for addr in addresses :  
+                    {   addressDiscovery = "fqdn", 
+                        servicePort = 9000, 
+                        hostname = addr, 
+                        autoPopulate = true, 
+                        shareNodes = true 
+                    } 
+                ])},
+                "monitors": [
+                    {
+                        "bigip": "/Common/http"
+                    }
+                ],
+                "class": "Pool"
+            },
+            "ASM_Policy": {
+                "class": "WAF_Policy",
+                "url": "${api_waf_policy_url}",
+                "ignoreChanges": false
+            }               
+        }        
+    }
+}
