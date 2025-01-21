@@ -2,11 +2,11 @@ terraform {
   required_providers {
     libvirt = {
       source = "dmacvicar/libvirt"
-      version = "0.7.1"
+      version = "0.8.1"
     }
     htpasswd = {
       source = "loafoe/htpasswd"
-      version = "1.0.4"
+      version = "1.2.1"
     }    
   }
 }
@@ -31,23 +31,6 @@ resource htpasswd_password hash {
 provider "libvirt" {
   # Configuration options
 }
-
-# at the end of the cloudinit 
-# add the following line to /etc/nginx/nginx.conf
-# load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;
-# ideally after "include /etc/nginx/modules-enabled/*.conf;"
-# sed is probably the best option
-
-#       MINIO_VOLUMES="https://minio{1...${var.vm_count}}:9000/mnt/disk{1...${var.vm_count}}/minio"
-  # - wget https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20241218131544.0.0_amd64.deb -O minio.deb
-  # - sudo dpkg -i minio.deb
-  # - mkdir /mnt/data && chown minio-user:minio-user /mnt/data
-  # - chown minio-user:minio-user /home/${random_pet.username.id}/.minio/certs/private.key
-  # - chown minio-user:minio-user /home/${random_pet.username.id}/.minio/certs/public.crt
-
-#       mkdir /data/{0..${var.vm_count - 1}}
-#       chown minio-user:minio-user /data/{0..${var.vm_count - 1}}
-
 
 resource "libvirt_cloudinit_disk" "simple_cloud_init" {
   count = var.vm_count
