@@ -120,7 +120,7 @@ write_files:
       MINIO_VOLUMES="http://${var.host_prefix}0{0...${var.vm_count - 1}}:9000/data/{0...${var.vm_count - 1}}"
       MINIO_OPTS="--certs-dir /home/${random_pet.username.id}/.minio/certs --console-address :9001"
       MINIO_ROOT_USER=minioadmin
-      MINIO_ROOT_PASSWORD=minioadmin
+      MINIO_ROOT_PASSWORD=${random_string.password.result}
   - path: /var/tmp/miniodir.sh
     content: |
       #!/bin/bash
