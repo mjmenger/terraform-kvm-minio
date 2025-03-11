@@ -31,7 +31,7 @@ warp:
   # Remote host parameters and connection info.
   remote:
     # Specify custom region
-    region: us-east-1
+    region: 
 
     # Access key and Secret key
     access-key: '${minio_api_access_key}'
