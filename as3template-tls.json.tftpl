@@ -48,14 +48,17 @@
         },
         "${application_name}_api": {
             "class": "Application",
-            "template": "http",
+            "template": "https",
             "serviceMain": {
                 "layer4": "tcp",
                 "pool": "${application_name}_api_pool",
                 "persistenceMethods": [],
                 "translateServerAddress": true,
                 "translateServerPort": true,
-                "class": "Service_HTTP",
+                "class": "Service_HTTPS",
+                "serverTLS": {
+                    "bigip": "/Common/clientssl-insecure-compatible"
+                },                
                 "profileHTTP": {
                     "bigip": "/Common/http"
                 },
@@ -66,6 +69,7 @@
                     "${api_destination_address}"
                 ],
                 "virtualPort": ${api_destination_port},
+                "redirect80": false,
                 "snat": "auto",
                 "policyWAF": {
                     "use": "${application_name}_api_ASM_Policy"

@@ -200,14 +200,30 @@ resource local_file as3 {
   )
 }
 
+resource local_file as3-tls {
+  filename = "${path.module}/${var.host_prefix}-tls-as3.json"
+  content = templatefile("${path.module}/as3template-tls.json.tftpl", 
+    {
+      tenant_name                 = var.host_prefix
+      application_name            = var.host_prefix
+      console_destination_address = var.console_destination_address
+      console_destination_port    = var.console_destination_port
+      api_destination_address     = var.api_destination_address
+      api_destination_port        = var.api_destination_port
+      api_waf_policy_url          = var.api_waf_policy_url
+      addresses                   = [for i in range(var.vm_count) : format(var.node_name_pattern,var.host_prefix, i )]
+    }
+  )
+}
+
 resource local_file warp {
   filename = "${path.module}/warpmixed.yaml"
   content = templatefile("${path.module}/warp/mixed.yaml",
     {
       api_destination_address = var.api_destination_address
       api_destination_port    = var.api_destination_port
-      minio_api_access_key    = var.minio_api_access_key
-      minio_api_secret_key    = var.minio_api_secret_key
+      minio_api_access_key    = "minioadmin"
+      minio_api_secret_key    = random_string.password.result
     }
   )
 }
