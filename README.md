@@ -44,7 +44,7 @@ This repository contains Terraform configurations to deploy an open-source MinIO
 
 ## Secrets Management
 
-This repository uses [SOPS](https://github.com/getsops/sops?tab=readme-ov-file#usage) for managing input and environment secrets. You can choose to use a Terraform tfvars file for inputs and a .env file for environment variables.
+This repository uses [SOPS](https://github.com/getsops/sops?tab=readme-ov-file#usage) in concert with Terragrunt for managing input and environment secrets. You can choose to use Terraform with a tfvars file for inputs and a .env file for environment variables.
 
 ## License
 
