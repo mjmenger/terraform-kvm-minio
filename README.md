@@ -1,6 +1,8 @@
 # Deploy open source MinIO and configure a BIG-IP using Terraform
 
-This repository contains Terraform configurations to deploy an open-source MinIO server on KVM. It includes configurations for setting up the MinIO server, generating AS3 declarations for configuring F5 BIG-IPs, and running benchmarks using Warp.
+This repository contains Terraform configurations to deploy an open-source MinIO server on KVM. It includes configurations for setting up the MinIO server, generating AS3 declarations for configuring F5 BIG-IPs, and running benchmarks using Warp. 
+
+A [video stepping through the use of the repo](https://www.youtube.com/watch?v=Lstwn07qW7A) is available.
 
 ## Prerequisites
 
