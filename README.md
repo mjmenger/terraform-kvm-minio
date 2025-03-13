@@ -4,6 +4,7 @@ This repository contains Terraform configurations to deploy an open-source MinIO
 
 ## Prerequisites
 
+- BIG-IP (virtual or physical)
 - Terraform
 - KVM
 - Libvirt
