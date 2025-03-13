@@ -32,6 +32,11 @@ This repository contains Terraform configurations to deploy an open-source MinIO
     terraform init
     ```
 
+3. Set the required environment variable, using SOPS or at the command line. The value must use the [proper syntax](https://libvirt.org/uri.html)
+    ```sh
+    LIBVIRT_DEFAULT_URI=appropriatevalueaccordingtothedocs
+    ```
+
 3. Apply the Terraform configuration:
     ```sh
     terraform apply
