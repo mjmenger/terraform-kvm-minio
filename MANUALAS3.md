@@ -1,6 +1,20 @@
 ## Manually create AS3 declaration
 We'll step you through creating an AS3 declaration to configure the BIG-IP in front of your MinIO cluster.
+### assumptions
+The remainder of this document assumes the following:  
+- the BIG-IP tenant/partition for this configuration is *minio*
+- the application within the BIG-IP tenant is *minio*
+- the destination address for the console virtual server is *192.168.0.17*
+- the destination port for the console virtual server is *80*
+- the destination address for the API virtual server is *192.168.0.18*
+- the destination port for the API virtual server is *9000*
+- the MinIO hosts have address from 192.168.0.8 through 192.168.0.11
+- the console port on the MinIO hosts is 9001
+- the API port on the MinIO hosts is 9000
 
+Where your environment differs from these values, please make the necessary adjustments in the steps below.
+
+### steps
 1. copy `as3manualtemplate.json` to `as3-minio.json`  
 you can use another name for the file, but the remainder of this document assumes `as3-minio.json`
 2. search for "tenant_name" and replace it with "minio"
