@@ -4,6 +4,8 @@ This repository contains Terraform configurations to deploy an open-source MinIO
 
 A [video stepping through the use of the repo](https://www.youtube.com/watch?v=Lstwn07qW7A) is available.
 
+If you have an existing MinIO cluster and BIG-IP configured with the AS3 extension, you can follow [the steps to create an AS3 declaration manually](./MANUALAS3.md).
+
 ## Prerequisites
 
 - BIG-IP (virtual or physical)
