@@ -1,0 +1,83 @@
+{
+    "class": "ADC",
+    "schemaVersion": "3.37.0",
+    "label": "MinIO virtual server",
+    "remark": "Demo declaration - review before use in production environments",
+    "tenant_name": {
+        "class": "Tenant",
+        "application_name_console": {
+            "class": "Application",
+            "template": "http",
+            "serviceMain": {
+                "layer4": "tcp",
+                "persistenceMethods": [
+                    "cookie"
+                ],
+                "pool": "application_name_console_pool",
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "class": "Service_HTTP",
+                "profileHTTP": {
+                    "bigip": "/Common/http"
+                },
+                "profileTCP": {
+                    "bigip": "/Common/tcp"
+                },
+                "virtualAddresses": [
+                    "console_destination_address"
+                ],
+                "virtualPort": console_destination_port,
+                "snat": "auto"
+            },
+            "application_name_console_pool": {
+                "members": console_members_declaration,
+                "monitors": [
+                    {
+                        "bigip": "/Common/http"
+                    }
+                ],
+                "class": "Pool"
+            }         
+        },
+        "application_name_api": {
+            "class": "Application",
+            "template": "http",
+            "serviceMain": {
+                "layer4": "tcp",
+                "pool": "application_name_api_pool",
+                "persistenceMethods": [],
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "class": "Service_HTTP",
+                "profileHTTP": {
+                    "bigip": "/Common/http"
+                },
+                "profileTCP": {
+                    "bigip": "/Common/tcp"
+                },
+                "virtualAddresses": [
+                    "api_destination_address"
+                ],
+                "virtualPort": api_destination_port,
+                "snat": "auto",
+                "policyWAF": {
+                    "use": "application_name_api_ASM_Policy"
+                }
+            },
+            "application_name_api_pool": {
+                "members": api_members_declaration,
+                "monitors": [
+                    {
+                        "bigip": "/Common/http"
+                    }
+                ],
+                "class": "Pool"
+            },
+            "application_name_api_ASM_Policy": {
+                "class": "WAF_Policy",
+                "url": "api_waf_policy_url",
+                "ignoreChanges": false
+            }               
+        }        
+    }
+}
