@@ -23,7 +23,7 @@ you can use another name for the file, but the remainder of this document assume
 5. search for "console_destination_port" and replace it with "80"
 6. search for "api_destination_address" and replace it with "192.168.0.18"
 7. search for "api_destination_port" and replace it with "9000"
-8. search for "api_waf_policy_url" and replace it with "https://raw.githubusercontent.com/mjmenger/waf-policy/refs/tags/0.3.2/minios3.json"
+8. search for "api_waf_policy_url" and replace it with "https://raw.githubusercontent.com/mjmenger/waf-policy/refs/tags/0.3.3/minios3.json"
 9. create the "members" element of the console and api pools
 ```json
     "members": [{
